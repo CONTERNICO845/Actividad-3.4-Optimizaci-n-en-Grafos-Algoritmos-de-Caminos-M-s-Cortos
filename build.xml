@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Archivo Ant de NetBeans para GestiondeGrafos -->
+<project name="GestiondeGrafos" default="run" basedir=".">
+    <description>Gestión y Optimización de Grafos Ponderados — Act. 3.3 / 3.4</description>
+
+    <property name="src.dir"         value="src"/>
+    <property name="build.classes.dir" value="build/classes"/>
+    <property name="dist.dir"        value="dist"/>
+    <property name="dist.jar"        value="${dist.dir}/GestionGrafos.jar"/>
+    <property name="main.class"      value="gestiondegrafos.VentanaPrincipal"/>
+
+    <target name="-init">
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile" depends="-init" description="Compilar fuentes Java">
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}"
+               includeantruntime="false" encoding="UTF-8">
+            <compilerarg value="-Xlint:unchecked"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile" description="Crear JAR ejecutable">
+        <jar destfile="${dist.jar}" basedir="${build.classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+        <echo message="JAR generado: ${dist.jar}"/>
+    </target>
+
+    <target name="run" depends="jar" description="Ejecutar la aplicación">
+        <java jar="${dist.jar}" fork="true"/>
+    </target>
+
+    <target name="clean" description="Limpiar artefactos de compilación">
+        <delete dir="build"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+</project>
